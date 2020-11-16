@@ -104,10 +104,10 @@ dist
 .tern-port
 
 #MongoDB playground files
-.mondgodb
+*.mondgodb
 
 #VSCode settings
 .vscode
 
 #REST client files
-.http
+*.http
