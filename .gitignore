@@ -108,3 +108,6 @@ dist
 
 #VSCode settings
 .vscode
+
+#REST client files
+.http
