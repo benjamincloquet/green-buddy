@@ -1,0 +1,5 @@
+use('shop');
+db.users.drop();
+db.users.insertMany([
+  { '_id' : 1, 'firstName' : 'Benjamin', 'lastName' : 'Cloquet', 'email' : 'benjamin.cloquet@gmail.com', 'password' : 'abc123' },
+]);
