@@ -104,7 +104,7 @@ dist
 .tern-port
 
 #MongoDB playground files
-*.mondgodb
+*.mongodb
 
 #VSCode settings
 .vscode
