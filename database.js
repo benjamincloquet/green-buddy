@@ -4,5 +4,5 @@ require('mongoose')
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(() => console.log('Succesfully connected to database !'))
+  .then(() => console.log('Successfully connected to database !'))
   .catch((err) => console.error(err));

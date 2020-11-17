@@ -11,7 +11,7 @@ const hashPassword = (password) => new Promise((resolve, reject) => {
       if (hashErr) {
         reject(hashErr);
       }
-      reject();
+      resolve(hashedPassword);
     });
   });
 });
@@ -22,9 +22,6 @@ const registerUser = (user) => new Promise((resolve, reject) => {
       .save()
       .then(() => {
         resolve();
-      })
-      .catch(() => {
-        reject();
       });
   }).catch(() => {
     reject();
