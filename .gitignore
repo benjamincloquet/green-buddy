@@ -110,4 +110,5 @@ dist
 .vscode
 
 #REST client files
+/rest-client
 *.http

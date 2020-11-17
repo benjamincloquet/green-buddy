@@ -1,20 +1,8 @@
-const bcrypt = require('bcryptjs');
+const { hashPassword } = require('../services/bcrypt');
+const connectedToDatabase = require('./middleware/connectedToDatabase');
+const validateUniqueEmail = require('./middleware/validateUniqueEmail');
 
 const User = require('../models/User');
-
-const hashPassword = (password) => new Promise((resolve, reject) => {
-  bcrypt.genSalt(process.env.BCRYPT_SALT_ROUNDS || 10, (saltErr, salt) => {
-    if (saltErr) {
-      reject(saltErr);
-    }
-    bcrypt.hash(password, salt, (hashErr, hashedPassword) => {
-      if (hashErr) {
-        reject(hashErr);
-      }
-      resolve(hashedPassword);
-    });
-  });
-});
 
 const registerUser = (user) => new Promise((resolve, reject) => {
   hashPassword(user.password).then((encryptedPassword) => {
@@ -29,7 +17,7 @@ const registerUser = (user) => new Promise((resolve, reject) => {
 });
 
 module.exports = (router) => {
-  router.post('/', (req, res) => {
+  router.post('/register', connectedToDatabase, validateUniqueEmail, (req, res) => {
     registerUser(req.body)
       .then(() => {
         res.status(201).json();
@@ -37,5 +25,9 @@ module.exports = (router) => {
       .catch(() => {
         res.status(503).json({ error: "Couldn't register new user" });
       });
+  });
+
+  router.post('/validate-email', connectedToDatabase, validateUniqueEmail, (req, res) => {
+    res.status(200);
   });
 };
