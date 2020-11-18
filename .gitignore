@@ -112,3 +112,6 @@ dist
 #REST client files
 /rest-client
 *.http
+
+#ESLint config
+.eslintrc.json
