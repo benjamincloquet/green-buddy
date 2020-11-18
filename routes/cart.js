@@ -1,6 +1,5 @@
 const authenticated = require('./middleware/authenticated');
 const productExists = require('./middleware/productExists');
-const connectedToDatabase = require('./middleware/connectedToDatabase');
 
 const CartProduct = require('../models/CartProduct');
 
@@ -30,7 +29,7 @@ module.exports = (router) => {
     res.send(req.user.cart);
   });
 
-  router.post('/cart', connectedToDatabase, authenticated, productExists, async (req, res) => {
+  router.post('/cart', authenticated, productExists, async (req, res) => {
     try {
       const cartProduct = await getCartProduct(req);
       const updatedCartProduct = cartProduct ? await changeCartProductQuantity(cartProduct, req.body.quantity) : await createCartProduct(req);
@@ -40,7 +39,7 @@ module.exports = (router) => {
     }
   });
 
-  router.delete('/cart', connectedToDatabase, authenticated, async (req, res) => {
+  router.delete('/cart', authenticated, async (req, res) => {
     try {
       await CartProduct.deleteOne({ id: req.body.cartProductId });
       res.sendStatus(200);

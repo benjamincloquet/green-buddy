@@ -1,5 +1,4 @@
 const { hashPassword } = require('../services/bcrypt');
-const connectedToDatabase = require('./middleware/connectedToDatabase');
 const validateUniqueEmail = require('./middleware/validateUniqueEmail');
 
 const User = require('../models/User');
@@ -17,7 +16,7 @@ const registerUser = (user) => new Promise((resolve, reject) => {
 });
 
 module.exports = (router) => {
-  router.post('/register', connectedToDatabase, validateUniqueEmail, (req, res) => {
+  router.post('/register', validateUniqueEmail, (req, res) => {
     registerUser(req.body)
       .then(() => {
         res.status(201).json();
@@ -27,7 +26,7 @@ module.exports = (router) => {
       });
   });
 
-  router.post('/validate-email', connectedToDatabase, validateUniqueEmail, (req, res) => {
+  router.post('/validate-email', validateUniqueEmail, (req, res) => {
     res.status(200);
   });
 };

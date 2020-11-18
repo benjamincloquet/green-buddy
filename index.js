@@ -11,6 +11,8 @@ if (process.env.NODE_ENV !== 'production') {
 require('./services/passport');
 require('./database');
 
+app.use(require('./connectedToDatabase'));
+
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
