@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const cartProductSchema = new Schema({
-  product: { type: Schema.Types.ObjectId, ref: 'Product' },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' },
+  productId: { type: Schema.Types.ObjectId, ref: 'Product' },
   quantity: {
     type: Number,
     required: true,
