@@ -1,10 +1,28 @@
-import './App.css';
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import fetchUserAction from '../actions/user';
+import HomePage from './HomePage';
+import AuthPage from './auth/AuthPage';
 
-const App = () => {
+const App = ({ fetchUser }) => {
+  useEffect(() => {
+    fetchUser();
+  });
+
   return (
-    <div className="App">
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/auth" component={AuthPage} />
+        <Route component={HomePage} />
+      </Switch>
+    </Router>
   );
-}
+};
 
-export default App;
+App.propTypes = {
+  fetchUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, { fetchUser: fetchUserAction })(App);
