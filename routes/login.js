@@ -6,8 +6,7 @@ module.exports = (router) => {
   });
 
   router.get('/user', (req, res) => {
-    console.log('user!');
-    // res.send(req.user);
+    res.send(req.user);
   });
 
   router.get('/logout', (req, res) => {

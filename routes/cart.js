@@ -20,13 +20,18 @@ const changeCartProductQuantity = async (cartProduct, quantity) => {
     updatedCartProduct.quantity = quantity;
     return cartProduct.save();
   }
-  await CartProduct.deleteOne({ id: cartProduct.id });
+  await CartProduct.deleteOne({ _id: cartProduct.id });
   return null;
 };
 
 module.exports = (router) => {
-  router.get('/cart', authenticated, (req, res) => {
-    res.send(req.user.cart);
+  router.get('/cart', authenticated, async (req, res) => {
+    try {
+      const cartProducts = await CartProduct.find({ userId: req.user.id });
+      res.status(200).json(cartProducts);
+    } catch (err) {
+      res.status(503).json({ error: "Couldn't get cart products" });
+    }
   });
 
   router.post('/cart', authenticated, productExists, async (req, res) => {
@@ -41,7 +46,7 @@ module.exports = (router) => {
 
   router.delete('/cart', authenticated, async (req, res) => {
     try {
-      await CartProduct.deleteOne({ id: req.body.cartProductId });
+      await CartProduct.deleteOne({ _id: req.body.cartProductId });
       res.sendStatus(200);
     } catch (err) {
       res.status(503).json({ error: "Couldn't delete product from the cart" });
