@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import fetchUserAction from '../actions/user';
+import { fetchUser as fetchUserAction } from '../actions/user';
 import HomePage from './HomePage';
 import AuthPage from './auth/AuthPage';
 

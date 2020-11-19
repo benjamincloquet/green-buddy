@@ -17,7 +17,7 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(require('body-parser').json());
-app.use('/', require('./routes'));
+app.use('/api', require('./routes'));
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`);

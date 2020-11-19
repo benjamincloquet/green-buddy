@@ -2,7 +2,7 @@ const passport = require('passport');
 
 module.exports = (router) => {
   router.post('/login', passport.authenticate('local'), (req, res) => {
-    res.sendStatus(200);
+    res.status(200).json(req.user);
   });
 
   router.get('/user', (req, res) => {
