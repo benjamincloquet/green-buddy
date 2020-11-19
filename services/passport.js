@@ -15,13 +15,16 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findOne({ email }).then((user) => {
-      if (!user) {
-        done(null, false, { message: 'That email is not registered' });
-      } else {
+  new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+    try {
+      const user = await User.findOne({ email });
+      if (user) {
         comparePasswords(password, user.password, (err, match) => (match ? done(err, user) : done(err, false, { message: 'Incorrect password' })));
+      } else {
+        done(null, false, { message: 'That email is not registered' });
       }
-    }).catch((err) => done(err));
+    } catch (err) {
+      done(err);
+    }
   }),
 );
