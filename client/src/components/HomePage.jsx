@@ -1,24 +1,25 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-const HomePage = ({ user }) => (
+const HomePage = ({ auth }) => (
   <div className="home-page">
     <p>
-      {`Welcome ${user ? user.firstName : 'guest'} !`}
+      {`Welcome ${auth.isAuthenticated ? auth.user.firstName : 'guest'} !`}
     </p>
+    <Link to="/auth">Log in</Link>
+    <Link to="/user">User Page</Link>
+    <Link to="/admin">Admin Page</Link>
   </div>
 );
 
 HomePage.propTypes = {
-  user: PropTypes.shape({
-    firstName: PropTypes.string,
-  }),
+  auth: PropTypes.shape({
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.shape(),
+  }).isRequired,
 };
 
-HomePage.defaultProps = {
-  user: null,
-};
-
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = (state) => ({ auth: state.auth });
 
 export default connect(mapStateToProps, null)(HomePage);

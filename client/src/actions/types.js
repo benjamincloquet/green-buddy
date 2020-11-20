@@ -1,3 +1,3 @@
-const FETCH_USER = 'FETCH_USER';
+const USER = 'USER';
 
-export default FETCH_USER;
+export default USER;
