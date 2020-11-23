@@ -6,7 +6,7 @@ import { fetchUser as fetchUserAction } from '../actions/auth';
 import HomePage from './HomePage';
 import AuthPage from './user/AuthPage';
 import UserPage from './user/UserPage';
-import AdminPage from './user/AdminPage';
+import AdminPage from './admin/AdminPage';
 import UserRoute from './routes/UserRoute';
 import AdminRoute from './routes/AdminRoute';
 
@@ -18,9 +18,9 @@ const App = ({ fetchUser }) => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/auth" component={AuthPage} />
-        <UserRoute exact path="/user" component={UserPage} />
-        <AdminRoute exact path="/admin" component={AdminPage} />
+        <Route path="/auth" component={AuthPage} />
+        <UserRoute path="/user" component={UserPage} />
+        <AdminRoute path="/admin" component={AdminPage} />
         <Route component={HomePage} />
       </Switch>
     </Router>

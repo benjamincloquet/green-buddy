@@ -21,4 +21,8 @@ const productSchema = new Schema({
   },
 });
 
+productSchema.set('toJSON', {
+  virtuals: true,
+});
+
 module.exports = mongoose.model('Product', productSchema, 'products');
