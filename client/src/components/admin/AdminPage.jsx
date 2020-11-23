@@ -1,34 +1,51 @@
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  Link, Switch, Route, useRouteMatch,
+  Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 import ProductsPage from './products/ProductsPage';
+import AdminPageAppBar from './AdminPageAppBar';
+import AdminPageDrawer from './AdminPageDrawer';
 
-const AdminPage = ({ auth }) => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    height: '100vh',
+    padding: theme.spacing(4),
+  },
+}));
+
+const AdminPage = () => {
+  const classes = useStyles();
   const match = useRouteMatch();
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-  if (!auth.isAuthenticated || !auth.user.admin) {
-    return null;
-  }
+  const openDrawer = () => {
+    setDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+  };
+
   return (
-    <div className="admin-page">
-      <h1>Admin Page</h1>
-      <Link to={`${match.url}/products`}>Products Page</Link>
-      <Switch>
-        <Route path={`${match.path}/products`} component={ProductsPage} />
-      </Switch>
+    <div className={classes.root}>
+      <AdminPageAppBar isShifted={isDrawerOpen} onIconClick={openDrawer} />
+      <AdminPageDrawer isOpen={isDrawerOpen} close={closeDrawer} />
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Switch>
+          <Route path={`${match.path}/products`} component={ProductsPage} />
+          <Route>
+            <p>Admin Home</p>
+          </Route>
+        </Switch>
+      </main>
     </div>
   );
 };
 
-AdminPage.propTypes = {
-  auth: PropTypes.shape({
-    isAuthenticated: PropTypes.bool,
-    user: PropTypes.shape(),
-  }).isRequired,
-};
-
-const mapStateToProps = (state) => ({ auth: state.auth });
-
-export default connect(mapStateToProps, null)(AdminPage);
+export default AdminPage;
