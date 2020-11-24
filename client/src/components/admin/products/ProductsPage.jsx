@@ -1,33 +1,24 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ProductList from './ProductList';
+import {
+  Switch, Route, useRouteMatch,
+} from 'react-router-dom';
+import { Typography } from '@material-ui/core';
+import useProducts from '../../hooks/useProducts';
+import NewProductPage from './NewProductPage';
+import ProductGrid from './ProductGrid';
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(async () => {
-    try {
-      const res = await axios.get('/api/products');
-      setProducts(res.data);
-    } catch (err) {
-      setError("Couldn't fetch products.");
-    }
-  }, []);
-
-  const renderProductList = () => {
-    if (!products) {
-      return <p>Loading...</p>;
-    }
-    return <ProductList products={products} />;
-  };
+  const match = useRouteMatch();
+  const [products, error] = useProducts();
 
   return (
-    <div className="products-page">
-      <h1>Products</h1>
-      {error ? <p>{error}</p> : null}
-      {renderProductList()}
-    </div>
+    <Switch>
+      <Route path={`${match.path}/new`} component={NewProductPage} />
+      <Route>
+        <Typography component="h2" variant="h3">Products</Typography>
+        {error ? <p>{error}</p> : null}
+        <ProductGrid products={products} />
+      </Route>
+    </Switch>
   );
 };
 

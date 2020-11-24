@@ -3,7 +3,6 @@ import {
   Link, useRouteMatch,
 } from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Drawer,
   IconButton,
@@ -15,32 +14,7 @@ import {
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListIcon from '@material-ui/icons/List';
-import drawerWidth from './AdminPageStyles';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'relative',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  paperClose: {
-    width: 0,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  closeIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingRight: theme.spacing(1),
-    ...theme.mixins.toolbar,
-  },
-}));
+import { useStyles } from './styles/AdminPageDrawerStyles';
 
 const AdminPageDrawer = ({ isOpen, close }) => {
   const classes = useStyles();

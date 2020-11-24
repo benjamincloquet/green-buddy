@@ -1,22 +1,11 @@
 import { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 import ProductsPage from './products/ProductsPage';
 import AdminPageAppBar from './AdminPageAppBar';
 import AdminPageDrawer from './AdminPageDrawer';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    height: '100vh',
-    padding: theme.spacing(4),
-  },
-}));
+import useStyles from './styles/AdminPageStyles';
 
 const AdminPage = () => {
   const classes = useStyles();
